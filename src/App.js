@@ -1,16 +1,24 @@
 import React, { Component } from 'react';
 import './App.css';
-import Person from './Person/Person';
+import Person from './Person/Person'; //this is file Person.js, .js can be ommited because it is
+//automatically added by the build
 
+//this App component will be used in the index.js file
 class App extends Component {
+//this class has the render() method, that is used by React to call it and render something to the screen
+
+//there's one special property you can define in any component which extends component
+      //can't do it in Person.js, it's a normal function (with hooks maybe)
+    //property state, where props are set and passed from outside
+    //state is managed from inside a component.
   state = {
-    persons: [
-      { id: 'afcwe1', name: 'Max', age: 28 },
-      { id: 'c2e2', name: 'Manu', age: 29 },
-      { id: '1f23', name: 'Stephanie', age: 26 }
+    persons: [ //created a persons property in javascript object
+      { id: '111', name: 'Max', age: 28 }, //is an array of js objects  
+      { id: '222', name: 'Manu', age: 29 },
+      { id: '333', name: 'Maria', age: 26 }
     ],
-    otherState: 'some other value',
-    showPersons: false
+    otherState: 'some other value', //another property
+    showPersons: false //this doesn't show persons without clicking the button
   }
 
   nameChangedHandler = ( event, id ) => {
@@ -67,8 +75,12 @@ class App extends Component {
     //    { name: event.target.value, age: 29 },
     //    { name: 'Stephanie', age: 26 }
 
-   // switchNameHandler = ( newName ) => {
-    // console.log('Was clicked!');
+
+
+    //this is the function needed to the onClick event (button):
+    //here we want o edit the state
+    // switchNameHandler = ( newName ) => {
+    // console 
     // DON'T DO THIS: this.state.persons[0].name = 'Maximilian';
     //this.setState( {
      // persons: [
@@ -107,7 +119,7 @@ class App extends Component {
             name={person.name}
             age={person.age}
             key={person.id}
-            changed={(event) => this.nameChangedHandler(event, persons.id)}
+            changed={(event) => this.nameChangedHandler(event, person.id)}
             />
         })}
          
@@ -131,18 +143,79 @@ class App extends Component {
     }
 
 
+
+
+
+
+
+
     return (
       <div className="App">
         <h1>Hi, I'm a React App</h1>
         <p className={classes.join(' ')}>This is really working!</p>
+        
+        {/*  
+
+          <Person/> --->>this will call the component
+
+          <Person name="max" age="28"/> ---> this is where you define props name (attributes), this values
+        will replace props when the component is called
+        
+          <Person name="Max" age="28"> My hobbies: Racing.</Person>
+        
+        */}
+
+
+        {/*
+          <button>Switch Name (when clicked)</button>
+          in order to handle this click event, the names should be defined in a not hardcoded way
+          we have to store it in some variable. 
+
+          Now we can access property state or other in our render() method,
+          by simply outputting something dynamic and the this keyword: name={this.state.persons[0].name}
+              "this" referes to the class
+              "state" property
+              "Persons" array
+              [0] index
+
+          Handle event Switch Name. Add onClick - it's an event in JS
+          <button onClick>Switch Name (when clicked)</button>
+          Put {} to execute some dynamic code:
+            <button onClick={this.switchNameHandler}>Switch Name (when clicked)</button>
+          If you use "()" -> <button onClick={this.switchNameHandler()}>Switch Name (when clicked)</button>
+          React will executed immediately once it renders this to the DOM
+
+
+          */}
+
+        
         <button
           style={style}
           onClick={this.togglePersonsHandler}>Toggle Persons</button>
+        
         {persons}
+
+
       </div>
+      //JSX expression must have ONE root element, in this case "div"
     );
-    // return React.createElement('div', {className: 'App'}, React.createElement('h1', null, 'Does this work now?'));
+        //this code in JavaScript:
+            // return React.createElement('div', {className: 'App'}, 
+            // React.createElement('h1', null, 'Does this work now?'));
+        //is exactly the same as:
+            //return (
+            //  <div className="App">
+            //  <h1>Hi, I'm a React App</h1>
+            //  </div>
+            //);
+        //in JSX. What is writen in JSX, is in the end compiled into JS.
+        //React.createElement() is a method that takes at least 3 arguments:
+          //- element to render to the DOM (ex. div)
+          //- configuration, or if you don't want to: null
+          //- any amount of children. you could have a multiple number of arguments separated by comma
+            //children means what's nested inside this div (ex. I'm a React App)  
   }
 }
 
+//export of component App, used in index.js
 export default App;
